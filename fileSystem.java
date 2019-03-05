@@ -7,20 +7,21 @@ public class FileSystem {
 	
 	public static String dir;
 	public static int p;
-	
+
 	public static void main(String[] args) throws FileNotFoundException {
 //		File doritOS = new File("/Users/pfelix/Documents/test.txt");
 //		Scanner in = new Scanner(doritOS);
+
 //		String dir = in.nextLine();
 		dir = "[folder:dorit[file:Hello World][file:This text is parseable][folder:Deeper[file:Hello World][folder:Deeper2[file:Test1]]][file:Doom]]";
+
 //		dir = "[folder:dorit[file:a][folder:b[file:c]]]";
 		System.out.println(dir);
 		p = 12;
 //		PrintWriter pw = new PrintWriter(doritOS);
 		ls();
-
 	}
-	
+
 	public static String ls() {
 		int i = p;
 		int pTemp = i;
@@ -44,16 +45,17 @@ public class FileSystem {
 		}
 		return out;
 	}
-	
+
 	public static int cd(String newDir) {
 		String currentDir = ls();
+		int pTemp = p;
 		if (currentDir.contains(newDir)) {
-			dir.in
+			folderCheck(p);
 		}
 		System.out.println("Directory does not exist.");
 		return -1;
 	}
-	
+
 	public static int folderCheck(int i) {
 		while (!dir.substring(i, i + 2).equals("]]")) {
 			if (dir.charAt(i) == ':' && dir.substring(i - 6, i).equals("folder")) {
@@ -63,6 +65,16 @@ public class FileSystem {
 			i++;
 		}
 		return i;
+	}
+
+	public static int endOfDir() {
+		int brackets = 1;
+		for (int i = p; i < dir.length(); i++) {
+			if (dir.charAt(i) == '[') brackets++;
+			if (dir.charAt(i) == ']') brackets--;
+			if (brackets == 0) return i;
+		}
+		return dir.length() - 1;
 	}
 
 }
