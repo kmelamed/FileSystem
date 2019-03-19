@@ -14,13 +14,21 @@ public class FileSystem {
 
 //		dir = "[folder:dorit[file:a][folder:b[file:c]]]";
 		System.out.println(dir);
-		p = 13;
+		p = 12;
 //		PrintWriter pw = new PrintWriter(doritOS);
-		ls();
-		System.out.println();
-		lsFolders();
-		System.out.println();
+		System.out.println(ls());
+		System.out.println(lsFolders());
 		System.out.println(currentDir());
+		System.out.println(cleanDir(currentDir()));
+		cd("Deeper");
+		System.out.println(currentDir());
+		System.out.println(ls());
+		System.out.println(lsFolders());
+		cd("Deeper2");
+		System.out.println(currentDir());
+		System.out.println(ls());
+		System.out.println(lsFolders());
+		
 	}
 
 	public static String ls() {
@@ -28,14 +36,15 @@ public class FileSystem {
 		int pTemp = i;
 		String temp = "";
 		String out = "";
-		while (i < dir.length()) {
+		int x = endOfDir();
+		while (i < x) {
 			if (dir.charAt(i) == ':') {
 				pTemp = i + 1;
 				while (dir.charAt(pTemp) != '[' && dir.charAt(pTemp) != ']') {
 					temp += "" + dir.charAt(pTemp);
 					pTemp++;
 				}
-				System.out.print(temp + "   ");
+//				System.out.print(temp + "   ");
 				out += temp + "   ";
 				temp = "";
 				if (dir.substring(i - 6, i).equals("folder")) {
@@ -59,7 +68,7 @@ public class FileSystem {
 					temp += "" + dir.charAt(pTemp);
 					pTemp++;
 				}
-				System.out.print(temp + "   ");
+//				System.out.print(temp + "   ");
 				out += temp + "   ";
 				temp = "";
 				i = folderCheck(i);
@@ -70,12 +79,20 @@ public class FileSystem {
 		return out;
 	}
 
-	public static int cd(String newDir) {
+	public static void cd(String newDir) {
 		String folders = lsFolders();
 		String currentDir = currentDir();
 		String cleanDir;
+		String cleanDirFiles;
 		if (folders.contains(newDir)) {
 			cleanDir = cleanDir(currentDir);
+			cleanDirFiles = cleanDirFiles(currentDir);
+			System.out.println(cleanDirFiles);
+			int x = cleanDir.indexOf(newDir);
+			p += x + newDir.length();
+		} else {
+			System.out.println("Directory does not exist.");
+		}
 //			int i = p;
 //			while (i < currentDir.length()) {
 //				if (dir.charAt(i) == ':' && dir.substring(i - 4, i).equals("file")) {
@@ -105,52 +122,123 @@ public class FileSystem {
 //					
 //				}
 //			}
+	}
+	
+	public static String minusEquals(String str) {
+		int x = 0;
+		
+		while (str.charAt(str.length() - 1 - x) != '[') {
+			x++;
 		}
-		System.out.println("Directory does not exist.");
-		return -1;
+		str = str.substring(0, str.length() - x);
+		for (int i = 0; i < x; i++) {
+			str += ' ';
+		}
+		return str;
 	}
 
 	public static String cleanDir(String currentDir) {
+//		System.out.println(currentDir);
 		int i = 0;
 		String cleanDir = "";
 		while (i < currentDir.length()) {
-			if (currentDir.charAt(i) == ':' && currentDir.substring(i - 4, i).equals("file")) {
-				System.out.println("test1");
+//			System.out.println(currentDir.charAt(i));
+			if (currentDir.charAt(i) == ':' && currentDir.substring(i - 5, i).equals("[file")) {
+//				System.out.println("test1");
+				cleanDir = minusEquals(cleanDir);
 				cleanDir += ':';
 				i++;
 				while (currentDir.charAt(i) != ']') {
-					if (currentDir.charAt(i) == '[')
-						cleanDir += '[';
-					else
-						cleanDir += ' ';
+					cleanDir += ' ';
 					i++;
 				}
-				cleanDir += ']';
-			} else if (currentDir.charAt(i) == ':' && currentDir.substring(i - 6, i).equals("folder")) {
+				cleanDir += "]";
+				i++;
+			} else if (currentDir.charAt(i) == ':' && currentDir.substring(i - 7, i).equals("[folder")) {
+//				System.out.println("test2");
+				cleanDir = minusEquals(cleanDir);
 				cleanDir += ':';
 				i++;
 				while (currentDir.charAt(i) != '[') {
 					cleanDir += currentDir.charAt(i);
 					i++;
 				}
-		
-				int brackets = 1;
-				while (brackets != 0) {
+				int brackets = 0;
+				while (brackets != -1) {
+//					System.out.println(brackets);
+//					System.out.println(cleanDir);
 					if (currentDir.charAt(i) == '[') {
 						brackets++;
 						cleanDir += '[';
 					} else if (currentDir.charAt(i) == ']') {
 						brackets--;
 						cleanDir += ']';
+					} else if (currentDir.charAt(i) == ':'){
+						cleanDir += ':';
 					} else {
 						cleanDir += ' ';
 					}
 					i++;
 				}
+//				i++;
 			} else {
 				cleanDir += currentDir.charAt(i);
+				i++;
 			}
-			i++;
+//			i++;
+		}
+		return cleanDir;
+	}
+	
+	public static String cleanDirFiles(String currentDir) {
+//		System.out.println(currentDir);
+		int i = 0;
+		String cleanDir = "";
+		while (i < currentDir.length()) {
+//			System.out.println(currentDir.charAt(i));
+			if (currentDir.charAt(i) == ':' && currentDir.substring(i - 5, i).equals("[file")) {
+//				System.out.println("test1");
+				cleanDir = minusEquals(cleanDir);
+				cleanDir += ':';
+				i++;
+				while (currentDir.charAt(i) != ']') {
+					cleanDir += currentDir.charAt(i);
+					i++;
+				}
+				cleanDir += "]";
+				i++;
+			} else if (currentDir.charAt(i) == ':' && currentDir.substring(i - 7, i).equals("[folder")) {
+//				System.out.println("test2");
+				cleanDir = minusEquals(cleanDir);
+				cleanDir += ':';
+				i++;
+				while (currentDir.charAt(i) != '[') {
+					cleanDir += ' ';
+					i++;
+				}
+				int brackets = 0;
+				while (brackets != -1) {
+//					System.out.println(brackets);
+//					System.out.println(cleanDir);
+					if (currentDir.charAt(i) == '[') {
+						brackets++;
+						cleanDir += '[';
+					} else if (currentDir.charAt(i) == ']') {
+						brackets--;
+						cleanDir += ']';
+					} else if (currentDir.charAt(i) == ':'){
+						cleanDir += ':';
+					} else {
+						cleanDir += ' ';
+					}
+					i++;
+				}
+//				i++;
+			} else {
+				cleanDir += currentDir.charAt(i);
+				i++;
+			}
+//			i++;
 		}
 		return cleanDir;
 	}
@@ -175,12 +263,13 @@ public class FileSystem {
 				brackets--;
 			if (brackets == 0)
 				return i;
+//				return i + 1;
 		}
 		return dir.length() - 1;
 	}
 
 	public static String currentDir() {
-		return dir.substring(p, endOfDir());
+		return dir.substring(p + 1, endOfDir());
 	}
 
 }
