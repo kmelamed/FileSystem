@@ -33,14 +33,30 @@ public class FileSystem {
 		System.out.println(currentDir());
 		cd("Deeper2");
 		System.out.println(currentDir());
-		cd("..");
-		System.out.println(p);
+		touch("Test2");
+		makeDir("Deeper3");
+		System.out.println(currentDir());
+		cd("Deeper3");
+		touch("Test3");
 		System.out.println(currentDir());
 		cd("..");
 		System.out.println(p);
 		System.out.println(currentDir());
 		cd("..");
 		System.out.println(p);
+		System.out.println(currentDir());
+		cd("..");
+		System.out.println(p);
+		System.out.println(currentDir());
+		cd("Deeper");
+		cd("Deeper2");
+		cd("Deeper3");
+		System.out.println(currentDir());
+		rm("Test3");
+		System.out.println(currentDir());
+		cd("..");
+		System.out.println(currentDir());
+		rmDir("Deeper3");
 		System.out.println(currentDir());
 //		rm("Hello World");
 //		rm("Hello World");
@@ -55,7 +71,7 @@ public class FileSystem {
 //		System.out.println(currentDir());
 //		System.out.println(ls());
 //		System.out.println(lsFolders());
-		
+
 	}
 
 	// Done
@@ -83,7 +99,7 @@ public class FileSystem {
 		}
 		return out;
 	}
-	
+
 	// Done
 	public static String lsFiles() {
 		int i = p;
@@ -144,7 +160,7 @@ public class FileSystem {
 					brackets--;
 				else if (dir.charAt(i) == ']')
 					brackets++;
-				
+
 				if (brackets == -1) {
 					break;
 				}
@@ -159,7 +175,7 @@ public class FileSystem {
 			System.out.println("Directory does not exist.");
 		}
 	}
-	
+
 	// Done
 	public static void rm(String file) {
 		String currentDir = currentDir();
@@ -176,13 +192,12 @@ public class FileSystem {
 			System.out.println("File does not exist!");
 		}
 	}
-	
-	
+
 	// Done
 	public static void rmDir(String folder) {
 		String currentDir = currentDir();
 		String cleanDir = cleanDir();
-		if(lsFolders().contains(folder)) {
+		if (lsFolders().contains(folder)) {
 			if (cleanDir.contains(folder + "]")) {
 				int x = cleanDir.indexOf(folder);
 				currentDir = currentDir.substring(0, x - 8) + currentDir.substring(x + folder.length() + 1);
@@ -194,12 +209,11 @@ public class FileSystem {
 			System.out.println("Directory does not exist!");
 		}
 	}
-	
-	
+
 	// Done
 	public static String minusEquals(String str) {
 		int x = 0;
-		
+
 		while (str.charAt(str.length() - 1 - x) != '[') {
 			x++;
 		}
@@ -207,11 +221,6 @@ public class FileSystem {
 		for (int i = 0; i < x; i++) {
 			str += ' ';
 		}
-		return str;
-	}
-	
-	// Probably necessary for touch and makeDir
-	public static String plusEquals(String str) {
 		return str;
 	}
 
@@ -255,7 +264,7 @@ public class FileSystem {
 					} else if (currentDir.charAt(i) == ']') {
 						brackets--;
 						cleanDir += ']';
-					} else if (currentDir.charAt(i) == ':'){
+					} else if (currentDir.charAt(i) == ':') {
 						cleanDir += ':';
 					} else {
 						cleanDir += ' ';
@@ -271,7 +280,7 @@ public class FileSystem {
 		}
 		return cleanDir;
 	}
-	
+
 	// Done
 	public static String cleanDirFiles() {
 //		System.out.println(currentDir);
@@ -310,7 +319,7 @@ public class FileSystem {
 					} else if (currentDir.charAt(i) == ']') {
 						brackets--;
 						cleanDir += ']';
-					} else if (currentDir.charAt(i) == ':'){
+					} else if (currentDir.charAt(i) == ':') {
 						cleanDir += ':';
 					} else {
 						cleanDir += ' ';
@@ -327,7 +336,6 @@ public class FileSystem {
 		return cleanDir;
 	}
 
-	
 	// Done
 	public static int folderCheck(int i) {
 		while (!dir.substring(i, i + 2).equals("]]")) {
@@ -340,7 +348,6 @@ public class FileSystem {
 		return i;
 	}
 
-	
 	// Done
 	public static int endOfDir() {
 		int brackets = 1;
@@ -356,32 +363,52 @@ public class FileSystem {
 		return dir.length() - 1;
 	}
 
-	
 	// Done
 	public static String currentDir() {
 		return dir.substring(p + 1, endOfDir());
 	}
-	
-	
+
 	// WIP
-	public static void touch() {
-		
+	public static void touch(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			Character ch = new Character(str.charAt(i));
+			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
+				System.out.println("Not a valid file name!");
+				return;
+			}
+		}
+		if (!lsFiles().contains(str)) {
+			String currentDir = currentDir();
+			currentDir += "[file:" + str + "]";
+			dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
+		}
 	}
-	
+
 	// WIP
-	public static void makeDir() {
-		
+	public static void makeDir(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			Character ch = new Character(str.charAt(i));
+			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
+				System.out.println("Not a valid file name!");
+				return;
+			}
+		}
+		if (!lsFolders().contains(str)) {
+			String currentDir = currentDir();
+			currentDir += "[folder:" + str + "]";
+			dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
+		}
 	}
-	
+
 	// WIP
 	// Not sure if this should be a method or part of main
 	public static void userInput() {
-		
+
 	}
-	
+
 	// Might want to make this
 	public static void writeToFile() {
-		
+
 	}
 
 }
