@@ -27,14 +27,16 @@ public class FileSystem {
 //		rm("Hello World");
 //		System.out.println(dir);
 		System.out.println(currentDir());
-		cd("Deeper");
+		edit("Hello World", "Hello World 2");
+		
+//		cd("Deeper");
 //		System.out.println(p);
 //		System.out.println(dir.charAt(p));
 		System.out.println(currentDir());
 		cd("Deeper2");
 		System.out.println(currentDir());
 		touch("Test2");
-		makeDir("Deeper3");
+		mkdir("Deeper3");
 		System.out.println(currentDir());
 		cd("Deeper3");
 		touch("Test3");
@@ -368,24 +370,48 @@ public class FileSystem {
 		return dir.substring(p + 1, endOfDir());
 	}
 
-	// WIP
+	// Done?
 	public static void touch(String str) {
-		for (int i = 0; i < str.length(); i++) {
-			Character ch = new Character(str.charAt(i));
-			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
+		if (!validName(str)) {
 				System.out.println("Not a valid file name!");
 				return;
-			}
-		}
-		if (!lsFiles().contains(str)) {
+		} else if (!lsFiles().contains(str)) {
 			String currentDir = currentDir();
 			currentDir += "[file:" + str + "]";
 			dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
 		}
 	}
+	
+	public static boolean validName(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			Character ch = new Character(str.charAt(i));
+			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static void edit(String oldFile, String newFile) {
+		if (lsFiles().contains(newFile)) {
+			System.out.println("Cannot create a duplicate file!");
+		} else if (lsFiles().contains(oldFile)) {
+			if (validName(newFile)) {
+				String cleanDirFiles = cleanDirFiles();
+				int x = cleanDirFiles.indexOf(oldFile);
+				String currentDir = currentDir();
+				currentDir = currentDir.substring(0, x) + newFile + currentDir.substring(x + newFile.length() + 1);
+				dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
+			} else {
+				System.out.println("Not a valid file name!");
+			}
+		} else {
+			System.out.println("Target file does not exist!");
+		}
+	}
 
-	// WIP
-	public static void makeDir(String str) {
+	// Done?
+	public static void mkdir(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			Character ch = new Character(str.charAt(i));
 			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
