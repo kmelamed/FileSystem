@@ -2,8 +2,13 @@ import java.io.FileNotFoundException;
 
 public class FileSystem {
 
-	public static String dir;
-	public static int p;
+	public static String dir = "[folder:dorit[file:Hello World][file:This text is parseable][folder:Deeper[file:Hello World][folder:Deeper2[file:Test1]]][file:Doom]]";
+//	public static String path;
+	public static int p = 12;
+	
+//	public FileSystem() {
+//		
+//	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 //		File doritOS = new File("/Users/pfelix/Documents/test.txt");
@@ -15,6 +20,7 @@ public class FileSystem {
 //		dir = "[folder:dorit[file:a][folder:b[file:c]]]";
 		System.out.println(dir);
 		p = 12;
+		System.out.println(currentDirName());
 //		PrintWriter pw = new PrintWriter(doritOS);
 //		System.out.println(lsFiles());
 //		System.out.println(ls());
@@ -58,14 +64,14 @@ public class FileSystem {
 		System.out.println(currentDir());
 		cd("..");
 		System.out.println(currentDir());
-		rmDir("Deeper3");
+		rmdir("Deeper3");
 		System.out.println(currentDir());
 //		rm("Hello World");
 //		rm("Hello World");
 //		rm("Test1");
 //		System.out.println(ls());
 //		System.out.println(lsFolders());
-//		rmDir("Deeper2");
+//		rmdir("Deeper2");
 //		System.out.println(currentDir());
 //		System.out.println(dir);
 //		cd("Deeper2");
@@ -196,7 +202,7 @@ public class FileSystem {
 	}
 
 	// Done
-	public static void rmDir(String folder) {
+	public static void rmdir(String folder) {
 		String currentDir = currentDir();
 		String cleanDir = cleanDir();
 		if (lsFolders().contains(folder)) {
@@ -369,6 +375,14 @@ public class FileSystem {
 	public static String currentDir() {
 		return dir.substring(p + 1, endOfDir());
 	}
+	
+	public static String currentDirName() {
+		int x = p;
+		while (dir.charAt(x) != ':') {
+			x--;
+		}
+		return dir.substring(x + 1, p + 1);
+	}
 
 	// Done?
 	public static void touch(String str) {
@@ -384,7 +398,6 @@ public class FileSystem {
 	
 	public static boolean validName(String str) {
 		for (int i = 0; i < str.length(); i++) {
-			Character ch = new Character(str.charAt(i));
 			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
 				return false;
 			}
@@ -413,7 +426,6 @@ public class FileSystem {
 	// Done?
 	public static void mkdir(String str) {
 		for (int i = 0; i < str.length(); i++) {
-			Character ch = new Character(str.charAt(i));
 			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
 				System.out.println("Not a valid file name!");
 				return;
