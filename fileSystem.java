@@ -1,89 +1,89 @@
-import java.io.FileNotFoundException;
 
 public class FileSystem {
 
-	public static String dir = "[folder:dorit[file:Hello World][file:This text is parseable][folder:Deeper[file:Hello World][folder:Deeper2[file:Test1]]][file:Doom]]";
-//	public static String path;
-	public static int p = 12;
+	String dir;
+//	String dir = "[folder:dorit[file:Hello World][file:This text is parseable][folder:Deeper[file:Hello World][folder:Deeper2[file:Test1]]][file:Doom]]";
+//	String path;
+	int p = 12;
 	
-//	public FileSystem() {
-//		
-//	}
-
-	public static void main(String[] args) throws FileNotFoundException {
-//		File doritOS = new File("/Users/pfelix/Documents/test.txt");
-//		Scanner in = new Scanner(doritOS);
-
-//		String dir = in.nextLine();
-		dir = "[folder:dorit[file:Hello World][file:This text is parseable][folder:Deeper[file:Hello World][folder:Deeper2[file:Test1]]][file:Doom]]";
-
-//		dir = "[folder:dorit[file:a][folder:b[file:c]]]";
-		System.out.println(dir);
-		p = 12;
-		System.out.println(currentDirName());
-//		PrintWriter pw = new PrintWriter(doritOS);
-//		System.out.println(lsFiles());
-//		System.out.println(ls());
-//		System.out.println(lsFolders());
-//		System.out.println(currentDir());
-//		System.out.println(cleanDir());
-//		System.out.println(cleanDirFiles());
-//		rm("This text is parseable");
-//		rm("Hello World");
-//		rm("Hello World");
-//		System.out.println(dir);
-		System.out.println(currentDir());
-		edit("Hello World", "Hello World 2");
-		
-//		cd("Deeper");
-//		System.out.println(p);
-//		System.out.println(dir.charAt(p));
-		System.out.println(currentDir());
-		cd("Deeper2");
-		System.out.println(currentDir());
-		touch("Test2");
-		mkdir("Deeper3");
-		System.out.println(currentDir());
-		cd("Deeper3");
-		touch("Test3");
-		System.out.println(currentDir());
-		cd("..");
-		System.out.println(p);
-		System.out.println(currentDir());
-		cd("..");
-		System.out.println(p);
-		System.out.println(currentDir());
-		cd("..");
-		System.out.println(p);
-		System.out.println(currentDir());
-		cd("Deeper");
-		cd("Deeper2");
-		cd("Deeper3");
-		System.out.println(currentDir());
-		rm("Test3");
-		System.out.println(currentDir());
-		cd("..");
-		System.out.println(currentDir());
-		rmdir("Deeper3");
-		System.out.println(currentDir());
-//		rm("Hello World");
-//		rm("Hello World");
-//		rm("Test1");
-//		System.out.println(ls());
-//		System.out.println(lsFolders());
-//		rmdir("Deeper2");
-//		System.out.println(currentDir());
-//		System.out.println(dir);
-//		cd("Deeper2");
-//		rm("Test1");
-//		System.out.println(currentDir());
-//		System.out.println(ls());
-//		System.out.println(lsFolders());
-
+	public FileSystem(String d) {
+		dir = d;
 	}
 
+//	public void main(String[] args) throws FileNotFoundException {
+////		File doritOS = new File("/Users/pfelix/Documents/test.txt");
+////		Scanner in = new Scanner(doritOS);
+//
+////		String dir = in.nextLine();
+//		dir = "[folder:dorit[file:Hello World][file:This text is parseable][folder:Deeper[file:Hello World][folder:Deeper2[file:Test1]]][file:Doom]]";
+//
+////		dir = "[folder:dorit[file:a][folder:b[file:c]]]";
+//		System.out.println(dir);
+//		p = 12;
+//		System.out.println(currentDirName());
+////		PrintWriter pw = new PrintWriter(doritOS);
+////		System.out.println(lsFiles());
+////		System.out.println(ls());
+////		System.out.println(lsFolders());
+////		System.out.println(currentDir());
+////		System.out.println(cleanDir());
+////		System.out.println(cleanDirFiles());
+////		rm("This text is parseable");
+////		rm("Hello World");
+////		rm("Hello World");
+////		System.out.println(dir);
+//		System.out.println(currentDir());
+//		edit("Hello World", "Hello World 2");
+//		
+////		cd("Deeper");
+////		System.out.println(p);
+////		System.out.println(dir.charAt(p));
+//		System.out.println(currentDir());
+//		cd("Deeper2");
+//		System.out.println(currentDir());
+//		touch("Test2");
+//		mkdir("Deeper3");
+//		System.out.println(currentDir());
+//		cd("Deeper3");
+//		touch("Test3");
+//		System.out.println(currentDir());
+//		cd("..");
+//		System.out.println(p);
+//		System.out.println(currentDir());
+//		cd("..");
+//		System.out.println(p);
+//		System.out.println(currentDir());
+//		cd("..");
+//		System.out.println(p);
+//		System.out.println(currentDir());
+//		cd("Deeper");
+//		cd("Deeper2");
+//		cd("Deeper3");
+//		System.out.println(currentDir());
+//		rm("Test3");
+//		System.out.println(currentDir());
+//		cd("..");
+//		System.out.println(currentDir());
+//		rmdir("Deeper3");
+//		System.out.println(currentDir());
+////		rm("Hello World");
+////		rm("Hello World");
+////		rm("Test1");
+////		System.out.println(ls());
+////		System.out.println(lsFolders());
+////		rmdir("Deeper2");
+////		System.out.println(currentDir());
+////		System.out.println(dir);
+////		cd("Deeper2");
+////		rm("Test1");
+////		System.out.println(currentDir());
+////		System.out.println(ls());
+////		System.out.println(lsFolders());
+//
+//	}
+
 	// Done
-	public static String ls() {
+	public void ls() {
 		int i = p;
 		int pTemp = i;
 		String temp = "";
@@ -105,15 +105,15 @@ public class FileSystem {
 			}
 			i++;
 		}
-		return out;
+		System.out.println(out);
 	}
 
 	// Done
-	public static String lsFiles() {
+	public String lsFiles() {
 		int i = p;
 		int pTemp = i;
 		String temp = "";
-		String out = "";
+		String out = ".";
 		while (i < dir.length()) {
 			if (dir.charAt(i) == ':' && dir.substring(i - 4, i).equals("file")) {
 				pTemp = i + 1;
@@ -121,7 +121,7 @@ public class FileSystem {
 					temp += "" + dir.charAt(pTemp);
 					pTemp++;
 				}
-				out += temp + "   ";
+				out += temp + ".   .";
 				temp = "";
 			} else if (dir.charAt(i) == ':' && dir.substring(i - 6, i).equals("folder")) {
 				i = folderCheck(i);
@@ -132,11 +132,11 @@ public class FileSystem {
 	}
 
 	// Done
-	public static String lsFolders() {
+	public String lsFolders() {
 		int i = p;
 		int pTemp = i;
 		String temp = "";
-		String out = "";
+		String out = ".";
 		while (i < dir.length()) {
 			if (dir.charAt(i) == ':' && dir.substring(i - 6, i).equals("folder")) {
 				pTemp = i + 1;
@@ -145,7 +145,7 @@ public class FileSystem {
 					pTemp++;
 				}
 //				System.out.print(temp + "   ");
-				out += temp + "   ";
+				out += temp + ".   .";
 				temp = "";
 				i = folderCheck(i);
 
@@ -156,7 +156,7 @@ public class FileSystem {
 	}
 
 	// Done
-	public static void cd(String newDir) {
+	public void cd(String newDir) {
 		String folders = lsFolders();
 //		String currentDir = currentDir();
 		String cleanDir;
@@ -180,12 +180,12 @@ public class FileSystem {
 			int x = cleanDir.indexOf(newDir);
 			p += x + newDir.length();
 		} else {
-			System.out.println("Directory does not exist.");
+			System.out.println("-doritOS: cd: " + newDir + ": Directory does not exist!");
 		}
 	}
 
 	// Done
-	public static void rm(String file) {
+	public void rm(String file) {
 		String currentDir = currentDir();
 		String cleanDirFiles = cleanDirFiles();
 		if (lsFiles().contains(file)) {
@@ -197,12 +197,12 @@ public class FileSystem {
 //			System.out.println(currentDir);
 			dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
 		} else {
-			System.out.println("File does not exist!");
+			System.out.println("-doritOS: rm: " + file + ": File does not exist!");
 		}
 	}
 
 	// Done
-	public static void rmdir(String folder) {
+	public void rmdir(String folder) {
 		String currentDir = currentDir();
 		String cleanDir = cleanDir();
 		if (lsFolders().contains(folder)) {
@@ -211,15 +211,15 @@ public class FileSystem {
 				currentDir = currentDir.substring(0, x - 8) + currentDir.substring(x + folder.length() + 1);
 				dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
 			} else {
-				System.out.println("Directory must be empty!");
+				System.out.println("-doritOS: rmdir: " + folder + ": Directory must be empty!");
 			}
 		} else {
-			System.out.println("Directory does not exist!");
+			System.out.println("-doritOS: rmdir: " + folder + ": Directory does not exist!");
 		}
 	}
 
 	// Done
-	public static String minusEquals(String str) {
+	public String minusEquals(String str) {
 		int x = 0;
 
 		while (str.charAt(str.length() - 1 - x) != '[') {
@@ -233,7 +233,7 @@ public class FileSystem {
 	}
 
 	// Done
-	public static String cleanDir() {
+	public String cleanDir() {
 //		System.out.println(currentDir);
 		String currentDir = currentDir();
 		int i = 0;
@@ -290,7 +290,7 @@ public class FileSystem {
 	}
 
 	// Done
-	public static String cleanDirFiles() {
+	public String cleanDirFiles() {
 //		System.out.println(currentDir);
 		String currentDir = currentDir();
 		int i = 0;
@@ -345,7 +345,7 @@ public class FileSystem {
 	}
 
 	// Done
-	public static int folderCheck(int i) {
+	public int folderCheck(int i) {
 		while (!dir.substring(i, i + 2).equals("]]")) {
 			if (dir.charAt(i) == ':' && dir.substring(i - 6, i).equals("folder")) {
 //				System.out.println(i);
@@ -357,7 +357,7 @@ public class FileSystem {
 	}
 
 	// Done
-	public static int endOfDir() {
+	public int endOfDir() {
 		int brackets = 1;
 		for (int i = p + 1; i < dir.length(); i++) {
 			if (dir.charAt(i) == '[')
@@ -372,11 +372,11 @@ public class FileSystem {
 	}
 
 	// Done
-	public static String currentDir() {
+	public String currentDir() {
 		return dir.substring(p + 1, endOfDir());
 	}
 	
-	public static String currentDirName() {
+	public String currentDirName() {
 		int x = p;
 		while (dir.charAt(x) != ':') {
 			x--;
@@ -385,46 +385,49 @@ public class FileSystem {
 	}
 
 	// Done?
-	public static void touch(String str) {
-		if (!validName(str)) {
-				System.out.println("Not a valid file name!");
+	public void touch(String file) {
+		if (!validName(file)) {
+			System.out.println("-doritOS: touch: " + file + ": Not a valid file name!");
 				return;
-		} else if (!lsFiles().contains(str)) {
+		} else if (!lsFiles().contains(file)) {
 			String currentDir = currentDir();
-			currentDir += "[file:" + str + "]";
+			currentDir += "[file:" + file + "]";
 			dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
 		}
 	}
 	
-	public static boolean validName(String str) {
+	public boolean validName(String str) {
 		for (int i = 0; i < str.length(); i++) {
-			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
+			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i)) && !(str.charAt(i) == ' ')) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	public static void edit(String oldFile, String newFile) {
-		if (lsFiles().contains(newFile)) {
-			System.out.println("Cannot create a duplicate file!");
-		} else if (lsFiles().contains(oldFile)) {
+	public void edit(String oldFile, String newFile) {
+		if (newFile.equals(oldFile)) 
+			return;
+		
+		if (!lsFiles().contains("." + oldFile + ".")) {
+			System.out.println("-doritOS: edit: " + oldFile + ": Target file does not exist!");
+		} else if (lsFiles().contains("." + newFile + ".")) {
+			System.out.println("-doritOS: edit: " + newFile + ": Cannot create a duplicate file!");
+		} else {
 			if (validName(newFile)) {
 				String cleanDirFiles = cleanDirFiles();
 				int x = cleanDirFiles.indexOf(oldFile);
 				String currentDir = currentDir();
-				currentDir = currentDir.substring(0, x) + newFile + currentDir.substring(x + newFile.length() + 1);
+				currentDir = currentDir.substring(0, x) + newFile + currentDir.substring(x + oldFile.length());
 				dir = dir.substring(0, p + 1) + currentDir + dir.substring(endOfDir());
 			} else {
-				System.out.println("Not a valid file name!");
+				System.out.println("-doritOS: edit: " + newFile + ": Not a valid file name!");
 			}
-		} else {
-			System.out.println("Target file does not exist!");
-		}
+		} 
 	}
 
 	// Done?
-	public static void mkdir(String str) {
+	public void mkdir(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			if (!Character.isDigit(str.charAt(i)) && !Character.isLetter(str.charAt(i))) {
 				System.out.println("Not a valid file name!");
@@ -440,12 +443,12 @@ public class FileSystem {
 
 	// WIP
 	// Not sure if this should be a method or part of main
-	public static void userInput() {
+	public void userInput() {
 
 	}
 
 	// Might want to make this
-	public static void writeToFile() {
+	public void writeToFile() {
 
 	}
 
