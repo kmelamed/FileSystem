@@ -6,8 +6,6 @@ import java.util.StringTokenizer;
 
 public class Terminal {
 
-//	public static String[] commands = { "cd", "edit", "exit", "ls", "mkdir", "rm", "rmdir", "touch" };
-
 	public static void main(String[] args) throws FileNotFoundException {
 		String path  = "src/doritOS";
 		File doritOS = new File(path);
