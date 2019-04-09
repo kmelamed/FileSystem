@@ -279,7 +279,7 @@ public class FileSystem {
 	}
 
 	// Done
-	private String currentDir() {
+	public String currentDir() {
 		return dir.substring(p + 1, endOfDir());
 	}
 	
